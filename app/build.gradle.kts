@@ -34,10 +34,17 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.example.App"
+    mainClass = "com.tiendatech.cliente.ClienteTienda"
 }
 
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+tasks.register<JavaExec>("runServer") {
+    mainClass.set("com.tiendatech.servidor.ServidorTienda")
+    classpath = sourceSets["main"].runtimeClasspath
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runClient") {
+    mainClass.set("com.tiendatech.cliente.ClienteTienda")
+    classpath = sourceSets["main"].runtimeClasspath
+    standardInput = System.`in`
 }
