@@ -44,14 +44,6 @@
             </PendingDiffInfo>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/main/kotlin/org/example/network/ClientSocketManager.kt">
-          <value>
-            <PendingDiffInfo>
-              <option name="filePath" value="$PROJECT_DIR$/src/main/kotlin/org/example/network/ClientSocketManager.kt" />
-              <option name="updatedContent" value="package org.example.network&#10;&#10;class ClientSocketManager(&#10;    private val host: String = &quot;localhost&quot;,&#10;    private val port: Int = 12345&#10;) {&#10;    fun connect() {&#10;        // TODO: abrir conexión con el servidor&#10;    }&#10;&#10;    fun close() {&#10;        // TODO: cerrar conexión&#10;    }&#10;}&#10;" />
-            </PendingDiffInfo>
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/src/main/kotlin/org/example/network/ServerSocketManager.kt">
           <value>
             <PendingDiffInfo>

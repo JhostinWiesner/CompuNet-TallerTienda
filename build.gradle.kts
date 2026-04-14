@@ -1,5 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.3.0"
+    java
+    application
 }
 
 group = "org.example"
@@ -10,11 +11,17 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
 
-kotlin {
-    jvmToolchain(25)
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+application {
+    mainClass = "org.example.Main"
 }
 
 tasks.test {
