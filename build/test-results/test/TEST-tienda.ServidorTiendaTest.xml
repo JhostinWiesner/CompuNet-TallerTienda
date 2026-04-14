@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tienda.ServidorTiendaTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-04-14T15:28:56.571Z" hostname="runnervm35a4x" time="0.049">
+  <properties/>
+  <testcase name="comandoComprarValido()" classname="tienda.ServidorTiendaTest" time="0.016"/>
+  <testcase name="comandoSalirRetornaDespedida()" classname="tienda.ServidorTiendaTest" time="0.002"/>
+  <testcase name="comandoListarDevuelveProductos()" classname="tienda.ServidorTiendaTest" time="0.011"/>
+  <testcase name="comandoComprarFormatoIncorrecto()" classname="tienda.ServidorTiendaTest" time="0.002"/>
+  <testcase name="comandoDesconocidoRetornaError()" classname="tienda.ServidorTiendaTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
