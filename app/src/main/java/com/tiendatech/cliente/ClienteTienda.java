@@ -23,30 +23,66 @@ public class ClienteTienda {
                 opcion = sc.nextLine();
 
                 if (opcion.equals("1")) {
-                    // TODO: 1. Enviar comando "LISTAR" al servidor
-                    // TODO: 2. Recibir la List<Producto> (Casting necesario)
-                    // TODO: 3. Mostrar los productos en consola
-                } 
+                    out.writeObject("LISTAR");
+                    out.flush();
+
+                    List<Producto> productos = (List<Producto>) in.readObject();
+
+                    if (productos == null || productos.isEmpty()) {
+                        System.out.println("no hay productos disponibles en este momento.");
+                    } else {
+                        System.out.println("\n--- productos disponibles ---");
+                        for (Producto p : productos) {
+                            System.out.println(p);
+                        }
+                    }
+                }
                 else if (opcion.equals("2")) {
-                    // TODO: 1. Enviar comando "COMPRAR"
-                    // TODO: 2. Pedir ID y Cantidad al usuario y enviarlos (writeInt)
-                    // TODO: 3. Recibir confirmación (readBoolean) y mostrar mensaje
+                    out.writeObject("comprar");
+
+                    int id = leerEntero(sc, "coloque el ID del producto: ");
+                    int cantidad = leerEntero(sc, "coloque la cantidad: ");
+
+                    out.writeInt(id);
+                    out.writeInt(cantidad);
+                    out.flush();
+
+                    boolean compraExitosa = in.readBoolean();
+                    if (compraExitosa) {
+                        System.out.println("compra relizada con exito");
+                    } else {
+                        System.out.println("no se pudo completar la compra ");
+                    }
+                } else if (!opcion.equals("3")) {
+                    System.out.println("opcion incorrecta, intente nuevamente ");
                 }
             }
             // Notificar al servidor que cerramos la sesión
             out.writeObject("SALIR");
             out.flush();
 
-        } catch (IOException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("error de conexión: " + e.getMessage());
         }
     }
 
     private static void mostrarMenu() {
-        System.out.println("\n--- TiendaTech ---");
+        System.out.println("\n--- tiendaTech ---");
         System.out.println("1. Ver productos");
         System.out.println("2. Realizar compra");
         System.out.println("3. Salir");
         System.out.print("Seleccione una opción: ");
+    }
+
+    private static int leerEntero(Scanner sc, String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String entrada = sc.nextLine();
+            try {
+                return Integer.parseInt(entrada);
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada invalida. Debe ingresar un numero entero.");
+            }
+        }
     }
 }
