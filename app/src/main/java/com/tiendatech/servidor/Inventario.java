@@ -26,20 +26,29 @@ public class Inventario {
     }
 
     private void inicializarProductos() {
-        // TODO: Agregar productos quemados para las pruebas
+        productos.add(new Producto(1, "compu", 1200.00, 10));
+        productos.add(new Producto(2, "audifonos", 50.00, 50));
+        productos.add(new Producto(3, "mouse", 25.00, 100));
+        productos.add(new Producto(4, "teclado", 75.00, 30));
+        productos.add(new Producto(5, "cargador", 200.00, 15));
     }
 
     // Método para que el ClienteHandler obtenga los datos a enviar
     public synchronized List<Producto> obtenerListaProductos() {
         // TODO: Retornar la lista que será enviada vía ObjectOutputStream
-        return null; 
+        return new ArrayList<>(productos);
     }
 
     // Método crítico para la lógica de negocio
     public synchronized boolean procesarCompra(int id, int cantidad) {
         // TODO: 1. Buscar el producto por ID
-        // TODO: 2. Validar si hay stock suficiente
-        // TODO: 3. Si hay, reducirlo y retornar true. Si no, false.
+        for (Producto p : productos){
+            if (p.getId()==id && p.getCantidadDisponible()>=cantidad){
+                p.reducirStock(cantidad);
+                return true;
+            }
+            return false;
+        }
         return false;
     }
 }
