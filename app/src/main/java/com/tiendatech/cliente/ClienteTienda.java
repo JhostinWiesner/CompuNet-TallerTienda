@@ -38,21 +38,26 @@ public class ClienteTienda {
                     }
                 }
                 else if (opcion.equals("2")) {
-                    out.writeObject("comprar");
+                   // out.writeObject("comprar");
 
                     int id = leerEntero(sc, "coloque el ID del producto: ");
                     int cantidad = leerEntero(sc, "coloque la cantidad: ");
 
-                    out.writeInt(id);
-                    out.writeInt(cantidad);
-                    out.flush();
+                 //   out.writeInt(id);
+                    //out.writeInt(cantidad);
+                    //out.flush();
+                        String comando = "COMPRAR|"+id+"|"+ cantidad;
 
-                    boolean compraExitosa = in.readBoolean();
-                    if (compraExitosa) {
-                        System.out.println("compra relizada con exito");
+                    out.writeObject(comando);
+                    out.flush();
+                      //
+                    String respuesta = (String) in.readObject();
+                    if(respuesta.startsWith("EXITO")){
+                        System.out.println(respuesta);
                     } else {
-                        System.out.println("no se pudo completar la compra ");
+                        System.out.println(respuesta);
                     }
+
                 } else if (!opcion.equals("3")) {
                     System.out.println("opcion incorrecta, intente nuevamente ");
                 }
