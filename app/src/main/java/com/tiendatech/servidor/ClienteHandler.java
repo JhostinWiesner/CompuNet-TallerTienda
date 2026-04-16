@@ -3,6 +3,7 @@ package com.tiendatech.servidor;
 import com.tiendatech.modelo.Producto;
 import java.io.*;
 import java.net.Socket;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class ClienteHandler implements Runnable {
@@ -21,14 +22,28 @@ public class ClienteHandler implements Runnable {
             boolean conectado = true;
             while (conectado) {
                 // TODO: 1. Leer el comando del cliente (String)
-                // String comando = ...
+                String comando = (String) in.readObject();
+                if (comando.equals("LISTAR")){
+                    List<Producto> productos = Inventario.getInstancia().obtenerListaProductos();
+                    out.writeObject(productos);
+                    out.flush();
+                } else if (comando.startsWith("COMPRAR")) {
+                    String[] partComando = comando.split("//");
+                    int id = Integer.parseInt(partComando[1]);
+                    int cantidad = Integer.parseInt(partComando[2]);
+                    boolean exito = Integer.getInstancia().procesarCompra(id,cantidad);
+                    String respuesta;
+                    if (exito) {
+                        respuesta = "EXITO: compra realizada correctamente";
+                    } else {
+                        respuesta = "ERROR: no hay suficiente stock o el producto no fue encontrado";
 
-                // TODO: 2. Estructurar el control de flujo (switch o if-else)
-                // - Si es "LISTAR": Obtener lista del Inventario y enviarla.
-                // - Si es "COMPRAR": Leer ID (int), Cantidad (int), procesar y enviar respuesta.
-                // - Si es "SALIR": Romper el ciclo.
-                
-                // Tip: No olviden usar out.flush() después de enviar datos.
+                    }
+                    out.writeObject(respuesta);
+                    out.flush();
+                } else if (comando.equals("SALIR")) {
+                    conectado=false;
+                }
             }
 
         } catch (IOException e) {
