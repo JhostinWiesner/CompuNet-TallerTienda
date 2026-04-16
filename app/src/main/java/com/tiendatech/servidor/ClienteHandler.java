@@ -3,7 +3,6 @@ package com.tiendatech.servidor;
 import com.tiendatech.modelo.Producto;
 import java.io.*;
 import java.net.Socket;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class ClienteHandler implements Runnable {
@@ -25,13 +24,14 @@ public class ClienteHandler implements Runnable {
                 String comando = (String) in.readObject();
                 if (comando.equals("LISTAR")){
                     List<Producto> productos = Inventario.getInstancia().obtenerListaProductos();
+                    out.reset();
                     out.writeObject(productos);
                     out.flush();
                 } else if (comando.startsWith("COMPRAR")) {
-                    String[] partComando = comando.split("//");
+                    String[] partComando = comando.split("\\|");
                     int id = Integer.parseInt(partComando[1]);
                     int cantidad = Integer.parseInt(partComando[2]);
-                    boolean exito = Integer.getInstancia().procesarCompra(id,cantidad);
+                    boolean exito = Inventario.getInstancia().procesarCompra(id,cantidad);
                     String respuesta;
                     if (exito) {
                         respuesta = "EXITO: compra realizada correctamente";
@@ -46,7 +46,7 @@ public class ClienteHandler implements Runnable {
                 }
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error en la comunicación con el cliente: " + e.getMessage());
         } finally {
             cerrarConexion();

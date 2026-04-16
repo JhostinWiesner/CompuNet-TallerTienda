@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class ClienteTienda {
     private static final String HOST = "localhost"; 
-    private static final int PUERTO = 12345;
+    private static final int PUERTO = 5000;
 
     public static void main(String[] args) {
         // Establecer conexión y preparar flujos de datos
@@ -26,12 +26,13 @@ public class ClienteTienda {
                     out.writeObject("LISTAR");
                     out.flush();
 
+                    @SuppressWarnings("unchecked")
                     List<Producto> productos = (List<Producto>) in.readObject();
 
                     if (productos == null || productos.isEmpty()) {
-                        System.out.println("no hay productos disponibles en este momento.");
+                        System.out.println("No hay productos disponibles en este momento.");
                     } else {
-                        System.out.println("\n--- productos disponibles ---");
+                        System.out.println("\n--- Productos disponibles ---");
                         for (Producto p : productos) {
                             System.out.println(p);
                         }
@@ -40,8 +41,8 @@ public class ClienteTienda {
                 else if (opcion.equals("2")) {
                    // out.writeObject("comprar");
 
-                    int id = leerEntero(sc, "coloque el ID del producto: ");
-                    int cantidad = leerEntero(sc, "coloque la cantidad: ");
+                    int id = leerEntero(sc, "Coloque el ID del producto: ");
+                    int cantidad = leerEntero(sc, "Coloque la cantidad: ");
 
                  //   out.writeInt(id);
                     //out.writeInt(cantidad);
@@ -59,7 +60,7 @@ public class ClienteTienda {
                     }
 
                 } else if (!opcion.equals("3")) {
-                    System.out.println("opcion incorrecta, intente nuevamente ");
+                    System.out.println("Opción incorrecta, intente nuevamente.");
                 }
             }
             // Notificar al servidor que cerramos la sesión
@@ -67,7 +68,7 @@ public class ClienteTienda {
             out.flush();
 
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("error de conexión: " + e.getMessage());
+            System.err.println("Error de conexión: " + e.getMessage());
         }
     }
 
@@ -76,7 +77,7 @@ public class ClienteTienda {
         System.out.println("1. Ver productos");
         System.out.println("2. Realizar compra");
         System.out.println("3. Salir");
-        System.out.print("Seleccione una opción: ");
+        System.out.print("Seleccione una opcion: ");
     }
 
     private static int leerEntero(Scanner sc, String mensaje) {

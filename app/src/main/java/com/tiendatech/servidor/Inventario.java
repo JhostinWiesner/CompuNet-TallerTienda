@@ -41,13 +41,14 @@ public class Inventario {
 
     // Método crítico para la lógica de negocio
     public synchronized boolean procesarCompra(int id, int cantidad) {
-        // TODO: 1. Buscar el producto por ID
-        for (Producto p : productos){
-            if (p.getId()==id && p.getCantidadDisponible()>=cantidad){
-                p.reducirStock(cantidad);
-                return true;
+        for (Producto p : productos) {
+            if (p.getId() == id) {
+                if (p.getCantidadDisponible() >= cantidad) {
+                    p.reducirStock(cantidad);
+                    return true;
+                }
+                return false;
             }
-            return false;
         }
         return false;
     }

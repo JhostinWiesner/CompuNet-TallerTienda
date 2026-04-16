@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ServidorTienda {
-    private static final int PUERTO = 12345;
+    private static final int PUERTO = 5000;
     private static final int MAX_HILOS = 10; // Ajustable
 
     public static void main(String[] args) {
